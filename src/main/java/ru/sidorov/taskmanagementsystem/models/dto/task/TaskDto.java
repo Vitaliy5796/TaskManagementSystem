@@ -19,7 +19,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 public class TaskDto {
 
     @ApiModelProperty(notes = "id задачи (только для отображения)")
-    private Long id;
+    private Integer id;
     @ApiModelProperty(notes = "Заголовок задачи")
     private String title;
     @ApiModelProperty(notes = "Описание задачи")

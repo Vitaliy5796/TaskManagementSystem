@@ -6,4 +6,6 @@ import ru.sidorov.taskmanagementsystem.models.entities.User;
 public interface TaskService {
 
     TaskDto save(TaskDto taskDto, User user, Integer assigneeId);
+
+    TaskDto update(TaskDto taskDto, User user);
 }

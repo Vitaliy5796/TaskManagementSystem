@@ -1,10 +1,11 @@
 package ru.sidorov.taskmanagementsystem.mappers.task;
 
-import org.mapstruct.Mapper;
+import org.mapstruct.*;
 import ru.sidorov.taskmanagementsystem.mappers.comment.CommentMapper;
 import ru.sidorov.taskmanagementsystem.mappers.user.UserMapper;
 import ru.sidorov.taskmanagementsystem.models.dto.task.TaskDto;
 import ru.sidorov.taskmanagementsystem.models.entities.Task;
+import ru.sidorov.taskmanagementsystem.models.entities.User;
 
 @Mapper(componentModel = "spring", uses = {UserMapper.class, CommentMapper.class})
 public interface TaskMapper {
@@ -24,4 +25,10 @@ public interface TaskMapper {
      * @return {@link Task}
      */
     Task toTask(TaskDto taskDto);
+
+    @BeanMapping(
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+            unmappedTargetPolicy = ReportingPolicy.IGNORE)
+    @Mapping(target = "comments", ignore = true)
+    void updateFromTaskDto(TaskDto taskDto, @MappingTarget Task task);
 }
