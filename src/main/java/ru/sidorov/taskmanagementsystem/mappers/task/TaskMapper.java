@@ -1,6 +1,7 @@
 package ru.sidorov.taskmanagementsystem.mappers.task;
 
 import org.mapstruct.*;
+import ru.sidorov.taskmanagementsystem.mappers.comment.CommentMapper;
 import ru.sidorov.taskmanagementsystem.mappers.user.UserMapper;
 import ru.sidorov.taskmanagementsystem.models.dto.task.TaskDto;
 import ru.sidorov.taskmanagementsystem.models.entities.Task;

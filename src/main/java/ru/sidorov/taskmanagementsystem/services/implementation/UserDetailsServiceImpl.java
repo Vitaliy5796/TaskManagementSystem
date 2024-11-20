@@ -2,7 +2,6 @@ package ru.sidorov.taskmanagementsystem.services.implementation;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,8 +9,6 @@ import org.springframework.stereotype.Service;
 import ru.sidorov.taskmanagementsystem.repositories.UserRepository;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,16 +25,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                         user.getPassword(),
                         Collections.singleton(user.getRole())
                 ))
-                .map(user -> {
-                    List<String> roles = user.getAuthorities()
-                            .stream()
-                            .map(GrantedAuthority::getAuthority)
-                            .collect(Collectors.toList());
-
-                    String rolesString = String.join(", ", roles);
-                    log.info("IN loadByUsername - username: " + username + " password: " + user.getPassword() + " ROLE: " + rolesString);
-                    return user;
-                })
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
 
     }

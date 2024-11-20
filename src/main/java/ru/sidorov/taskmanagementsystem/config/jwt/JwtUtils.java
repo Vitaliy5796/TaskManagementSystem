@@ -44,12 +44,6 @@ public class JwtUtils {
                 .signWith(jwtSecretKey).compact();
     }
 
-    public String generateJwtToken(String email) {
-        return Jwts.builder().setSubject(email)
-                .setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(new Date(System.currentTimeMillis() + jwtExpiration * 1000))
-                .signWith(jwtSecretKey).compact();
-    }
-
     public boolean validateToken(String token) {
         try {
             Jwts.parser().setSigningKey(jwtSecretKey).parseClaimsJws(token);

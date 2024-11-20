@@ -20,6 +20,7 @@ import ru.sidorov.taskmanagementsystem.services.abstracts.UserService;
 import ru.sidorov.taskmanagementsystem.services.implementation.AuthenticationService;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -33,7 +34,7 @@ public class RegistrationController {
 
     @ApiOperation(value = "Регистрация нового пользователя")
     @RequestMapping(value = "/registration", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public TmsResponseEntity<UserDto> registration(@RequestBody UserSaveDto userDto) {
+    public TmsResponseEntity<UserDto> registration(@Valid @RequestBody UserSaveDto userDto) {
         log.info("[registration] Starting");
         TmsResponseEntity<UserDto> responseEntity;
 
@@ -50,9 +51,17 @@ public class RegistrationController {
 
     @ApiOperation(value = "Аутентификация пользователя")
     @RequestMapping(value = "/token", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public TmsResponseEntity<JwtResponse> authUser(@RequestBody CredentialsDto credentialsDto, HttpServletResponse response) {
-        log.info("IN authUser - login: " + credentialsDto.getLogin() + " password: " + credentialsDto.getPassword());
-        JwtResponse jwtResponse = authenticationService.authenticateAndGetToken(credentialsDto, response);
-        return new TmsResponseOkEntity<>(jwtResponse);
+    public TmsResponseEntity<JwtResponse> authUser(@Valid @RequestBody CredentialsDto credentialsDto, HttpServletResponse response) {
+        log.info("[authUser] Starting");
+        TmsResponseEntity<JwtResponse> responseEntity;
+
+        try {
+            responseEntity = new TmsResponseOkEntity<>(authenticationService.authenticateAndGetToken(credentialsDto, response));
+        } catch (Exception e) {
+            log.error(ExceptionUtils.getRootCauseMessage(e));
+            responseEntity = new TmsResponseErrorEntity<>(e);
+        }
+        log.info("[authUser] Done");
+        return responseEntity;
     }
 }

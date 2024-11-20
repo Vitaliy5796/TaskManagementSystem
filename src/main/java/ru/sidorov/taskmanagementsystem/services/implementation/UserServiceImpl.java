@@ -33,16 +33,10 @@ public class UserServiceImpl implements UserService {
         user.setId(null);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Role role = roleRepository.findById(2).orElseThrow(() -> new NotFoundRoleException(2));
+        Role role = roleRepository.findById(1).orElseThrow(() -> new NotFoundRoleException(1));
         user.setRole(role);
         User saveUser = userRepository.save(user);
         return userMapper.toUserDto(saveUser);
-    }
-
-    @Override
-    public JwtResponse getToken(CredentialsDto credentialsDto) {
-        String login = credentialsDto.getLogin();
-        return new JwtResponse(login, "");
     }
 
     @Override

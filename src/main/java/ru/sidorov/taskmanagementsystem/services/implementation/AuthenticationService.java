@@ -29,22 +29,12 @@ public class AuthenticationService {
 
     public JwtResponse authenticateAndGetToken(CredentialsDto credentialsDto, HttpServletResponse response) {
         try {
-            log.info("IN authenticateAndGetToken - username: " + credentialsDto.getLogin() + " password: " +
-                    credentialsDto.getPassword());
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     credentialsDto.getLogin(),
                     credentialsDto.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String token = jwtUtils.generateJwtToken(authentication);
-            log.info("Token: " + token);
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
-            Cookie jwtCookie = new Cookie("jwtToken", token);
-            jwtCookie.setPath("/");
-            jwtCookie.setHttpOnly(true);
-            jwtCookie.setMaxAge(30 * 24 * 60 * 60);
-
-            response.addCookie(jwtCookie);
 
             return new JwtResponse(userDetails.getUsername(), token);
         } catch (AuthenticationException authenticationException) {

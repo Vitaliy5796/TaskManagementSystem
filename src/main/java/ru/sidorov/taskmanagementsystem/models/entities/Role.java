@@ -25,10 +25,6 @@ public class Role implements GrantedAuthority {
     @ApiModelProperty(notes = "Уникальный идентификатор роли")
     private int id;
 
-    @Column(name = "code", nullable = false, length = 100)
-    @ApiModelProperty(notes = "Код роли")
-    private String code;
-
     @Column(name = "name", nullable = false)
     @ApiModelProperty(notes = "Наименование роли")
     private String name;

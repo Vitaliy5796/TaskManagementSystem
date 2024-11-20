@@ -11,13 +11,12 @@ import ru.sidorov.taskmanagementsystem.models.dto.common.TmsResponseEntity;
 import ru.sidorov.taskmanagementsystem.models.dto.common.TmsResponseErrorEntity;
 import ru.sidorov.taskmanagementsystem.models.dto.common.TmsResponseOkEntity;
 import ru.sidorov.taskmanagementsystem.models.dto.task.TaskDto;
-import ru.sidorov.taskmanagementsystem.models.dto.user.UserDto;
-import ru.sidorov.taskmanagementsystem.models.dto.user.UserSaveDto;
 import ru.sidorov.taskmanagementsystem.models.entities.User;
 import ru.sidorov.taskmanagementsystem.services.abstracts.TaskService;
 import ru.sidorov.taskmanagementsystem.services.abstracts.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -33,7 +32,7 @@ public class AdminController {
 
     @ApiOperation(value = "Создание задачи")
     @RequestMapping(value = "/task", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public TmsResponseEntity<TaskDto> createTask(@RequestBody TaskDto taskDto,
+    public TmsResponseEntity<TaskDto> createTask(@Valid @RequestBody TaskDto taskDto,
                                                  @RequestParam("assigneeId") Integer assigneeId,
                                                  HttpServletRequest request) {
         log.info("[createTask] Starting");
@@ -56,7 +55,7 @@ public class AdminController {
 
     @ApiOperation(value = "Обновление задачи")
     @RequestMapping(value = "/task", produces = "application/json;charset=UTF-8", method = RequestMethod.PATCH)
-    public TmsResponseEntity<TaskDto> updateTask(@RequestBody TaskDto taskDto, HttpServletRequest request) {
+    public TmsResponseEntity<TaskDto> updateTask(@Valid @RequestBody TaskDto taskDto, HttpServletRequest request) {
         log.info("[updateTask] Starting");
         TmsResponseEntity<TaskDto> responseEntity;
 

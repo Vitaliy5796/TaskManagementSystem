@@ -1,21 +1,26 @@
 package ru.sidorov.taskmanagementsystem.services.implementation;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.sidorov.taskmanagementsystem.mappers.comment.CommentMapper;
 import ru.sidorov.taskmanagementsystem.mappers.task.TaskMapper;
+import ru.sidorov.taskmanagementsystem.models.dto.comment.CommentDto;
 import ru.sidorov.taskmanagementsystem.models.dto.task.TaskDto;
 import ru.sidorov.taskmanagementsystem.models.entities.Task;
 import ru.sidorov.taskmanagementsystem.models.entities.User;
 import ru.sidorov.taskmanagementsystem.models.enums.Status;
 import ru.sidorov.taskmanagementsystem.models.exception.NotFoundTaskException;
 import ru.sidorov.taskmanagementsystem.models.exception.NotFoundUserException;
+import ru.sidorov.taskmanagementsystem.repositories.CommentRepository;
 import ru.sidorov.taskmanagementsystem.repositories.TaskRepository;
 import ru.sidorov.taskmanagementsystem.repositories.UserRepository;
 import ru.sidorov.taskmanagementsystem.services.abstracts.TaskService;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +28,9 @@ public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
+    private final CommentMapper commentMapper;
     private final TaskMapper taskMapper;
+    private final CommentRepository commentRepository;
 
     @Override
     @Transactional
@@ -107,6 +114,20 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.save(task);
 
         return taskMapper.toTaskDto(task);
+    }
+
+    @Override
+    public List<CommentDto> getComments(Integer taskId) {
+        return commentRepository.findByTaskId(taskId).stream()
+                .map(commentMapper::toCommentDto)
+                .toList();
+    }
+
+    @Override
+    public Page<TaskDto> getTasks(Integer authorId, Integer assigneeId, int page, int size) {
+        PageRequest pageable = PageRequest.of(page, size);
+        return taskRepository.findByAuthorOrAssignee(authorId, assigneeId, pageable)
+                .map(taskMapper::toTaskDto);
     }
 
     private boolean checkAssigneeTask(Integer taskId, User user) {

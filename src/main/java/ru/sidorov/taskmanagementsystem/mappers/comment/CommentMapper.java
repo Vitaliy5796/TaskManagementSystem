@@ -7,6 +7,8 @@ import ru.sidorov.taskmanagementsystem.models.dto.comment.CommentDto;
 import ru.sidorov.taskmanagementsystem.models.dto.comment.CommentSaveDto;
 import ru.sidorov.taskmanagementsystem.models.entities.Comment;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", uses = {UserMapper.class, TaskMapper.class})
 public interface CommentMapper {
 
@@ -26,4 +28,13 @@ public interface CommentMapper {
      * @return {@link Comment}
      */
     Comment toComment(CommentSaveDto commentSaveDto);
+
+
+    /**
+     * maps {@link List<Comment>} to {@link List<CommentDto>}
+     *
+     * @param comments {@link List<Comment>} objects
+     * @return {@link List<CommentDto>}
+     */
+    List<CommentDto> toCommentDtoList(List<Comment> comments);
 }

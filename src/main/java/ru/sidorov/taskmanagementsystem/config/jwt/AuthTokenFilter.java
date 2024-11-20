@@ -11,7 +11,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -29,7 +28,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        String token = parsJwtFromCookie(httpServletRequest);
+        String token = parseJwt(httpServletRequest);
         if (token != null && jwtUtils.validateToken(token)) {
             String login = jwtUtils.getUserLoginFromToken(token);
             UserDetails userDetails = userDetailsService.loadUserByUsername(login);
@@ -39,18 +38,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
 
-    }
-
-    private String parsJwtFromCookie(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("jwtToken")) {
-                    return cookie.getValue();
-                }
-            }
-        }
-        return null;
     }
 
     private String parseJwt(HttpServletRequest servletRequest) {
