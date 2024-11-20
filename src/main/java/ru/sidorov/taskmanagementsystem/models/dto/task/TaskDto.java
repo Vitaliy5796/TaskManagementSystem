@@ -5,10 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.sidorov.taskmanagementsystem.models.dto.comment.CommentDto;
 import ru.sidorov.taskmanagementsystem.models.dto.user.UserDto;
-
-import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
@@ -32,6 +29,4 @@ public class TaskDto {
     private UserDto assignee;
     @ApiModelProperty(notes = "Автор задачи")
     private UserDto author;
-    @ApiModelProperty(notes = "Комментарии задачи")
-    private List<CommentDto> comments;
 }

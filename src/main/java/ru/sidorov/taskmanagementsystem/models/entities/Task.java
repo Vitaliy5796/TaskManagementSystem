@@ -47,7 +47,7 @@ public class Task {
     private User author;
 
     @ApiModelProperty(notes = "Исполнитель задачи")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "assignee_id")
     private User assignee;
 

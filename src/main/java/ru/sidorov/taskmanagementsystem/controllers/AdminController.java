@@ -18,6 +18,7 @@ import ru.sidorov.taskmanagementsystem.services.abstracts.TaskService;
 import ru.sidorov.taskmanagementsystem.services.abstracts.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -53,7 +54,7 @@ public class AdminController {
         return responseEntity;
     }
 
-    @ApiOperation(value = "Создание задачи")
+    @ApiOperation(value = "Обновление задачи")
     @RequestMapping(value = "/task", produces = "application/json;charset=UTF-8", method = RequestMethod.PATCH)
     public TmsResponseEntity<TaskDto> updateTask(@RequestBody TaskDto taskDto, HttpServletRequest request) {
         log.info("[updateTask] Starting");
@@ -71,27 +72,73 @@ public class AdminController {
         return responseEntity;
     }
 
-    @ApiOperation(value = "Сохранение нового пользователя")
-    @RequestMapping(value = "/", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-    public TmsResponseEntity<UserDto> saveUser(@RequestBody UserSaveDto userDto) {
-        log.info("[saveUser] Starting");
-        TmsResponseEntity<UserDto> responseEntity;
+    @ApiOperation(value = "Получение всех задач")
+    @RequestMapping(value = "/tasks", produces = "application/json;charset=UTF-8", method = RequestMethod.GET)
+    public TmsResponseEntity<List<TaskDto>> getAllTasks() {
+        log.info("[getAllTasks] Starting");
+        TmsResponseEntity<List<TaskDto>> responseEntity;
 
         try {
-            responseEntity = new TmsResponseOkEntity<>(userService.save(userDto));
+            responseEntity = new TmsResponseOkEntity<>(taskService.getAllTasks());
         } catch (Exception e) {
-            responseEntity = new TmsResponseErrorEntity<>(e);
             log.error(ExceptionUtils.getRootCauseMessage(e));
+            responseEntity = new TmsResponseErrorEntity<>(e);
         }
 
-        log.info("[saveUser] Done");
+        log.info("[getAllTasks] Done");
         return responseEntity;
     }
 
+    @ApiOperation(value = "Получение задачи по taskId")
+    @RequestMapping(value = "/task/{taskId}", produces = "application/json;charset=UTF-8", method = RequestMethod.GET)
+    public TmsResponseEntity<TaskDto> getTaskById(@PathVariable Integer taskId) {
+        log.info("[getTaskById] Starting");
+        TmsResponseEntity<TaskDto> responseEntity;
 
+        try {
+            responseEntity = new TmsResponseOkEntity<>(taskService.getTaskById(taskId));
+        } catch (Exception e) {
+            log.error(ExceptionUtils.getRootCauseMessage(e));
+            responseEntity = new TmsResponseErrorEntity<>(e);
+        }
 
-    @RequestMapping(value = "/", produces = "application/json;charset=UTF-8", method = RequestMethod.GET)
-    public TmsResponseEntity<String> test() {
-        return new TmsResponseOkEntity<>("Admin controller test");
+        log.info("[getTaskById] Done");
+        return responseEntity;
+    }
+
+    @ApiOperation(value = "Назначение нового исполнителя по taskId и userId")
+    @RequestMapping(value = "/task/{taskId}", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+    public TmsResponseEntity<TaskDto> setTaskNewAssignee(@PathVariable Integer taskId,
+                                                        @RequestParam Integer userId) {
+        log.info("[setTaskNewAssignee] Starting");
+        TmsResponseEntity<TaskDto> responseEntity;
+
+        try {
+            responseEntity = new TmsResponseOkEntity<>(taskService.setNewAssigneeTask(taskId, userId));
+        } catch (Exception e) {
+            log.error(ExceptionUtils.getRootCauseMessage(e));
+            responseEntity = new TmsResponseErrorEntity<>(e);
+        }
+
+        log.info("[setTaskNewAssignee] Done");
+        return responseEntity;
+    }
+
+    @ApiOperation(value = "Удаление задачи по taskId")
+    @RequestMapping(value = "/task/{taskId}", produces = "application/json;charset=UTF-8", method = RequestMethod.DELETE)
+    public TmsResponseEntity<String> delTaskById(@PathVariable Integer taskId) {
+        log.info("[delTaskById] Starting");
+        TmsResponseEntity<String> responseEntity;
+
+        try {
+            taskService.deleteTaskById(taskId);
+            responseEntity = new TmsResponseOkEntity<>("Задача удалена");
+        } catch (Exception e) {
+            log.error(ExceptionUtils.getRootCauseMessage(e));
+            responseEntity = new TmsResponseErrorEntity<>(e);
+        }
+
+        log.info("[delTaskById] Done");
+        return responseEntity;
     }
 }

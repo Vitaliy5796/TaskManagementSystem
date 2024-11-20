@@ -4,7 +4,7 @@ public class NotFoundRoleException extends NotFoundException {
 
     public static final String ERROR_MSG = "Роль не найдена";
 
-    public static final String ERROR_MSG_USER_WITH_ID = "Роль %d не найдена";
+    public static final String ERROR_MSG_USER_WITH_ID = "Роль c id = %d не найдена";
 
     public NotFoundRoleException() {
         super(ERROR_MSG);
