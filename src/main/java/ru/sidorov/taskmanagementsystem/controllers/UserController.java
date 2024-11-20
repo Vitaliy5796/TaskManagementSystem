@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.data.domain.Page;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.sidorov.taskmanagementsystem.config.jwt.JwtUtils;
 import ru.sidorov.taskmanagementsystem.models.dto.comment.CommentDto;
@@ -17,7 +16,6 @@ import ru.sidorov.taskmanagementsystem.models.dto.common.TmsResponseOkEntity;
 import ru.sidorov.taskmanagementsystem.models.dto.task.TaskDto;
 import ru.sidorov.taskmanagementsystem.services.abstracts.CommentService;
 import ru.sidorov.taskmanagementsystem.services.abstracts.TaskService;
-import ru.sidorov.taskmanagementsystem.services.abstracts.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -30,7 +28,6 @@ import java.util.List;
 @Slf4j
 public class UserController {
 
-    private final UserService userService;
     private final TaskService taskService;
     private final CommentService commentService;
     private final JwtUtils jwtUtils;

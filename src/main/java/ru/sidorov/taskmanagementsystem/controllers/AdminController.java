@@ -13,7 +13,6 @@ import ru.sidorov.taskmanagementsystem.models.dto.common.TmsResponseOkEntity;
 import ru.sidorov.taskmanagementsystem.models.dto.task.TaskDto;
 import ru.sidorov.taskmanagementsystem.models.entities.User;
 import ru.sidorov.taskmanagementsystem.services.abstracts.TaskService;
-import ru.sidorov.taskmanagementsystem.services.abstracts.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -26,7 +25,6 @@ import java.util.List;
 @Slf4j
 public class AdminController {
 
-    private final UserService userService;
     private final TaskService taskService;
     private final JwtUtils jwtUtils;
 
