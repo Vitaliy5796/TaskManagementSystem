@@ -2,6 +2,8 @@ package ru.sidorov.taskmanagementsystem.models.dto.comment;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.sidorov.taskmanagementsystem.models.dto.task.TaskDto;
@@ -13,6 +15,8 @@ import javax.validation.constraints.Size;
 @ApiModel(description = "Комментарий для отображения")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class CommentSaveDto {
 
     @NotBlank(message = "Контент не может быть пустым")

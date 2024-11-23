@@ -102,7 +102,7 @@ public class UserController {
         TmsResponseEntity<List<CommentDto>> responseEntity;
 
         try {
-            responseEntity = new TmsResponseOkEntity<>(taskService.getComments(taskId));
+            responseEntity = new TmsResponseOkEntity<>(commentService.getComments(taskId));
         } catch (Exception e) {
             log.error(ExceptionUtils.getRootCauseMessage(e));
             responseEntity = new TmsResponseErrorEntity<>(e);

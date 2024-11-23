@@ -4,9 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import lombok.*;
 import ru.sidorov.taskmanagementsystem.models.enums.Priority;
 import ru.sidorov.taskmanagementsystem.models.enums.Status;
 
@@ -16,8 +15,11 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "tasks")
 @ApiModel(description = "Задачи")
+@EqualsAndHashCode
 public class Task {
 
     @Id

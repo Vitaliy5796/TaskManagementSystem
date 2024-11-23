@@ -16,6 +16,8 @@ import ru.sidorov.taskmanagementsystem.repositories.CommentRepository;
 import ru.sidorov.taskmanagementsystem.repositories.TaskRepository;
 import ru.sidorov.taskmanagementsystem.services.abstracts.CommentService;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
@@ -44,5 +46,12 @@ public class CommentServiceImpl implements CommentService {
         Comment saveComment = commentRepository.save(comment);
 
         return commentMapper.toCommentDto(saveComment);
+    }
+
+    @Override
+    public List<CommentDto> getComments(Integer taskId) {
+        return commentRepository.findByTaskId(taskId).stream()
+                .map(commentMapper::toCommentDto)
+                .toList();
     }
 }

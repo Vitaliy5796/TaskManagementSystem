@@ -3,8 +3,7 @@ package ru.sidorov.taskmanagementsystem.models.dto.task;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ru.sidorov.taskmanagementsystem.models.dto.comment.CommentDto;
 import ru.sidorov.taskmanagementsystem.models.dto.user.UserDto;
 
@@ -17,7 +16,10 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @ApiModel(description = "Задача для отображения")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
 @JsonInclude(NON_NULL)
+@Builder
 public class TaskDto {
 
     @ApiModelProperty(notes = "id задачи (только для отображения)")

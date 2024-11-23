@@ -4,9 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -21,6 +20,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name = "users")
 @ApiModel(description = "Пользователь")
+@AllArgsConstructor
+@Builder
 public class User implements UserDetails {
 
     @Id

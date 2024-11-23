@@ -2,10 +2,7 @@ package ru.sidorov.taskmanagementsystem.models.entities;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -17,6 +14,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ApiModel(description = "Роли пользователя")
 @Table(name = "roles")
+@AllArgsConstructor
+@Builder
 public class Role implements GrantedAuthority {
 
     @Id

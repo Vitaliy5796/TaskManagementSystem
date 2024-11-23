@@ -28,9 +28,7 @@ public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
-    private final CommentMapper commentMapper;
     private final TaskMapper taskMapper;
-    private final CommentRepository commentRepository;
 
     @Override
     @Transactional
@@ -114,13 +112,6 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.save(task);
 
         return taskMapper.toTaskDto(task);
-    }
-
-    @Override
-    public List<CommentDto> getComments(Integer taskId) {
-        return commentRepository.findByTaskId(taskId).stream()
-                .map(commentMapper::toCommentDto)
-                .toList();
     }
 
     @Override

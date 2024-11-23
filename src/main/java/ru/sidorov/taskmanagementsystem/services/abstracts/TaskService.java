@@ -79,12 +79,4 @@ public interface TaskService {
      * @return {@link Page<TaskDto>}
      */
     Page<TaskDto> getTasks(Integer authorId, Integer assigneeId, int page, int size);
-
-    /**
-     * Get list comments from database
-     *
-     * @param taskId {@link Integer}
-     * @return {@link List<CommentDto>}
-     */
-    List<CommentDto> getComments(Integer taskId);
 }
