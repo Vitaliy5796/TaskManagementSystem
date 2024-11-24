@@ -1,11 +1,14 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 
-until nc -z -v -w30 db 3306
-do
-  echo "Waiting for database connection..."
-  sleep 5
-done
+# Ожидание базы данных (если требуется)
+if [ "$DB_HOST" != "" ]; then
+  echo "Ожидание базы данных на $DB_HOST:$DB_PORT..."
+  while ! nc -z $DB_HOST $DB_PORT; do
+    sleep 1
+  done
+  echo "База данных доступна!"
+fi
 
-echo "Database is up - executing command"
+# Запуск приложения
 exec "$@"

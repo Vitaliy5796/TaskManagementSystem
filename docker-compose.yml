@@ -4,29 +4,22 @@ services:
   app:
     build:
       context: .
-      dockerfile: DockerFile
-    container_name: spring-boot-app
+    container_name: app
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      DB_HOST: mysql
+      DB_PORT: 3306
     ports:
       - "8080:8080"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/task_managements
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
     depends_on:
-      - db
+      - mysql
 
-  db:
+  mysql:
     image: mysql:8.1
-    container_name: mysql-db
+    container_name: mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: task_managements
     ports:
       - "3306:3306"
-    volumes:
-      - mysql-data:/var/lib/mysql
-    command: --default-authentication-plugin=mysql_native_password
-
-volumes:
-  mysql-data:
