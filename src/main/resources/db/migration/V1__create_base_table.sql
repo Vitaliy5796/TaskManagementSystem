@@ -1,3 +1,5 @@
+CREATE DATABASE IF NOT EXISTS task_managements;
+
 CREATE TABLE roles
 (
     id   int AUTO_INCREMENT primary key,

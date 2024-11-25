@@ -19,6 +19,7 @@ services:
     container_name: mysql
     restart: always
     environment:
+      MYSQL_URL: jdbc:mysql://mysql:3306/task_managements
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: task_managements
     ports:
