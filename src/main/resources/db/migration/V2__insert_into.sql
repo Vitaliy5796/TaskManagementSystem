@@ -1,6 +1,6 @@
 INSERT INTO roles (name)
-VALUES ("ROLE_USER"),
-       ("ROLE_ADMIN");
+VALUES ('ROLE_USER'),
+       ('ROLE_ADMIN');
 
 INSERT INTO users (email, password, role_id, username)
 VALUES ('user@mail.ru', '$2a$10$NfAmrhMry1fxdmxUUYQgtOOGAiJiUWWR6RIjZ4eWptKCpVSWTHXLK', 1, 'user'),

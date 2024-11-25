@@ -38,19 +38,4 @@ public class UserServiceImpl implements UserService {
         User saveUser = userRepository.save(user);
         return userMapper.toUserDto(saveUser);
     }
-
-    @Override
-    public UserDto getUserById(Integer id) {
-        return null;
-    }
-
-    @Override
-    public void deleteUserById(Integer id) {
-
-    }
-
-    @Override
-    public UserDto updateUser(UserSaveDto userDto) {
-        return null;
-    }
 }
