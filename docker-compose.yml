@@ -7,8 +7,6 @@ services:
     container_name: app
     environment:
       SPRING_PROFILES_ACTIVE: dev
-      DB_HOST: mysql
-      DB_PORT: 3306
     ports:
       - "8080:8080"
     depends_on:
@@ -19,8 +17,8 @@ services:
     container_name: mysql
     restart: always
     environment:
-      MYSQL_URL: jdbc:mysql://mysql:3306/task_managements
-      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: task_managements
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_URL: jdbc:mysql://mysql:3306/task_managements
     ports:
       - "3306:3306"
