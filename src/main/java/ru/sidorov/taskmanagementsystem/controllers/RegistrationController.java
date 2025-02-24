@@ -32,6 +32,12 @@ public class RegistrationController {
     private final UserService userService;
     private final AuthenticationService authenticationService;
 
+    /**
+     * Регистрация нового пользователя
+     *
+     * @param userDto Данные для регистрации нового пользователя
+     * @return Зарегестрировавшегося пользователя в формате TmsResponseEntity
+     */
     @ApiOperation(value = "Регистрация нового пользователя")
     @RequestMapping(value = "/registration", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public TmsResponseEntity<UserDto> registration(@Valid @RequestBody UserSaveDto userDto) {
@@ -49,6 +55,13 @@ public class RegistrationController {
         return responseEntity;
     }
 
+    /**
+     * Получение JWT-токена
+     *
+     * @param credentialsDto Логин(email) и пороль для аутентификации
+     * @param response HTTP-запрос
+     * @return Ответ с логином(email) и сгенерированным токеном
+     */
     @ApiOperation(value = "Аутентификация пользователя")
     @RequestMapping(value = "/token", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public TmsResponseEntity<JwtResponse> authUser(@Valid @RequestBody CredentialsDto credentialsDto, HttpServletResponse response) {

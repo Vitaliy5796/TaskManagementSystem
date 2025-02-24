@@ -32,6 +32,14 @@ public class UserController {
     private final CommentService commentService;
     private final JwtUtils jwtUtils;
 
+    /**
+     * Установка статуса задачи
+     *
+     * @param status Статус задачи (PENDING, IN_PROGRESS или COMPLETED)
+     * @param taskId id задачи для установки статуса
+     * @param request HTTP-запрос, содержащий JWT-токен
+     * @return Задачу с обновленным статусом в формате TmsResponseEntity
+     */
     @ApiOperation(value = "Установка статуса задачи по taskId")
     @RequestMapping(value = "/task/{taskId}", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public TmsResponseEntity<TaskDto> setStatusTask(@RequestParam String status,
@@ -54,6 +62,13 @@ public class UserController {
         return responseEntity;
     }
 
+    /**
+     * Добавление комментария к задаче
+     *
+     * @param commentSaveDtoDto Комментарий для задачи
+     * @param request HTTP-запрос, содержащий JWT-токен
+     * @return Созданный комментарий в формате TmsResponseEntity
+     */
     @ApiOperation(value = "Добавление комментария к задачи")
     @RequestMapping(value = "/task/addComment", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
     public TmsResponseEntity<CommentDto> addComment(@Valid @RequestBody CommentSaveDto commentSaveDtoDto,
@@ -74,6 +89,15 @@ public class UserController {
         return responseEntity;
     }
 
+    /**
+     * Получение задач с фильтрацией по автору или исполнителю и пагинацией
+     *
+     * @param authorId  id автора задачи (может быть {@code null}, тогда фильтр не применяется)
+     * @param assigneeId id исполнителя задачи (может быть {@code null}, тогда фильтр не применяется)
+     * @param page      номер страницы (начиная с 0)
+     * @param size      количество элементов на странице
+     * @return Страницу задач в формате TmsResponseEntity
+     */
     @ApiOperation("Получение задач автора или исполнителя с фильтрацией и пагинацией")
     @RequestMapping(value = "/tasks", produces = "application/json;charset=UTF-8", method = RequestMethod.GET)
     public TmsResponseEntity<Page<TaskDto>> getTasks(@RequestParam(value = "authorId", required = false) Integer authorId,
@@ -95,6 +119,12 @@ public class UserController {
         return responseEntity;
     }
 
+    /**
+     * Получение комментариев к задачу
+     *
+     * @param taskId id задачи
+     * @return Список комментариев к задаче в формате TmsResponseEntity
+     */
     @ApiOperation("Получение комментариев для задачи")
     @RequestMapping(value = "/{taskId}/comments", produces = "application/json;charset=UTF-8", method = RequestMethod.GET)
     public TmsResponseEntity<List<CommentDto>> getComments(@PathVariable Integer taskId) {

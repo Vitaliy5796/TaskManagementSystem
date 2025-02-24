@@ -4,6 +4,7 @@ import org.mapstruct.*;
 import ru.sidorov.taskmanagementsystem.mappers.comment.CommentMapper;
 import ru.sidorov.taskmanagementsystem.mappers.user.UserMapper;
 import ru.sidorov.taskmanagementsystem.models.dto.task.TaskDto;
+import ru.sidorov.taskmanagementsystem.models.dto.task.TaskUpdateDto;
 import ru.sidorov.taskmanagementsystem.models.entities.Task;
 
 @Mapper(componentModel = "spring", uses = {UserMapper.class})
@@ -29,5 +30,5 @@ public interface TaskMapper {
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
             unmappedTargetPolicy = ReportingPolicy.IGNORE)
     @Mapping(target = "comments", ignore = true)
-    void updateFromTaskDto(TaskDto taskDto, @MappingTarget Task task);
+    void updateFromTaskDto(TaskUpdateDto taskDto, @MappingTarget Task task);
 }

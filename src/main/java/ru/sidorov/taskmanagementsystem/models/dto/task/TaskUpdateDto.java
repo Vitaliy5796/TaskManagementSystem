@@ -16,24 +16,19 @@ import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
-@ApiModel(description = "Задача для отображения")
+@ApiModel(description = "Задача для обновления")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
 @JsonInclude(NON_NULL)
 @Builder
-public class TaskDto {
+public class TaskUpdateDto {
 
-    @ApiModelProperty(notes = "id задачи (только для отображения)")
-    private Integer id;
-
-    @NotBlank(message = "Название не может быть пустым")
     @Size(max = 25, message = "Название не может превышать 25 символов.")
     @ApiModelProperty(notes = "Заголовок задачи")
     private String title;
 
-    @NotBlank(message = "Описание не может быть пустым")
     @Size(max = 255, message = "Описание не может превышать 255 символов.")
     @ApiModelProperty(notes = "Описание задачи")
     private String description;
@@ -51,18 +46,6 @@ public class TaskDto {
     @ApiModelProperty(notes = "Испольнитель задачи")
     private UserDto assignee;
 
-    @ApiModelProperty(notes = "Автор задачи")
-    private UserDto author;
-
     @ApiModelProperty(notes = "Версия задачи (для контроля изменений)")
     private Integer version = 1;
-
-    @ApiModelProperty(notes = "Дата и время создания задачи (Только для отображения)")
-    private LocalDateTime createdAt;
-
-    @ApiModelProperty(notes = "Дата и время последнего обновления задачи (Только для отображения)")
-    private LocalDateTime updatedAt;
-
-    @ApiModelProperty(notes = "Комментарии к задаче")
-    private List<CommentDto> comments;
 }

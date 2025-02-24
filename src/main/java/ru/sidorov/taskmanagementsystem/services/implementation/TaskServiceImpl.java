@@ -9,6 +9,7 @@ import ru.sidorov.taskmanagementsystem.mappers.comment.CommentMapper;
 import ru.sidorov.taskmanagementsystem.mappers.task.TaskMapper;
 import ru.sidorov.taskmanagementsystem.models.dto.comment.CommentDto;
 import ru.sidorov.taskmanagementsystem.models.dto.task.TaskDto;
+import ru.sidorov.taskmanagementsystem.models.dto.task.TaskUpdateDto;
 import ru.sidorov.taskmanagementsystem.models.entities.Task;
 import ru.sidorov.taskmanagementsystem.models.entities.User;
 import ru.sidorov.taskmanagementsystem.models.enums.Status;
@@ -43,7 +44,7 @@ public class TaskServiceImpl implements TaskService {
         if (user != null) {
             task.setAuthor(user);
         }
-
+        task.setVersion(1);
         Task saveTask = taskRepository.save(task);
 
         return taskMapper.toTaskDto(saveTask);
@@ -51,15 +52,13 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public TaskDto update(TaskDto taskDto, User user) {
-        Integer taskId = taskDto.getId();
-
+    public TaskDto update(TaskUpdateDto taskDto, Integer taskId, User user) {
         checkTask(taskId);
 
-        Task task = taskRepository.findById(taskDto.getId()).orElseThrow(() -> new NotFoundTaskException(taskId));
+        Task task = taskRepository.findById(taskId).orElseThrow(() -> new NotFoundTaskException(taskId));
 
         taskMapper.updateFromTaskDto(taskDto, task);
-
+        task.setVersion(taskDto.getVersion() + 1);
         Task saveTask = taskRepository.save(task);
 
         return taskMapper.toTaskDto(saveTask);
@@ -85,18 +84,6 @@ public class TaskServiceImpl implements TaskService {
         checkTask(id);
 
         taskRepository.deleteById(id);
-    }
-
-    @Override
-    @Transactional
-    public TaskDto setNewAssigneeTask(Integer taskId, Integer assigneeId) {
-        checkTask(taskId);
-
-        Task task = taskRepository.findById(taskId).orElseThrow(() -> new NotFoundTaskException(taskId));
-        task.setAssignee(userRepository.findById(assigneeId).orElseThrow(NotFoundUserException::new));
-        taskRepository.save(task);
-
-        return taskMapper.toTaskDto(task);
     }
 
     @Override

@@ -2,18 +2,21 @@ package ru.sidorov.taskmanagementsystem.models.entities;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
-import javax.persistence.*;
-
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
+/**
+ * Представляет пользователя системы.
+ * Реализует интерфейс {@link UserDetails} для работы с Spring Security.
+ *
+ * @author Vitaliy5796
+ * @version 1.1
+ */
 @Entity
 @Getter
 @Setter
@@ -24,22 +27,38 @@ import java.util.Set;
 @Builder
 public class User implements UserDetails {
 
+    /**
+     * Уникальный идентификатор пользователя.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(notes = "Уникальный идентификатор пользователя")
     private Integer id;
 
+
+    /**
+     * Email пользователя, который также используется как логин.
+     */
     @Column(unique = true, nullable = false)
     @ApiModelProperty(notes = "Почта пользователя")
     private String email;
 
+    /**
+     * Имя пользователя.
+     */
     @Column
     private String username;
 
+    /**
+     * Пароль пользователя (захешированный).
+     */
     @Column(nullable = false)
     @ApiModelProperty(notes = "Пароль пользователя")
     private String password;
 
+    /**
+     * Роль пользователя в системе.
+     */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Role.class, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;

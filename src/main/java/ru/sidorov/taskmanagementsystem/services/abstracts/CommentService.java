@@ -6,22 +6,25 @@ import ru.sidorov.taskmanagementsystem.models.entities.User;
 
 import java.util.List;
 
+/**
+ * Сервис для работы с комментариями
+ */
 public interface CommentService {
 
     /**
-     * Save comment in database
+     * Сохранение комментария
      *
-     * @param commentSaveDto {@link CommentSaveDto}
-     * @param user {@link User}
-     * @return {@link CommentDto}
+     * @param commentSaveDto {@link CommentSaveDto} Сохраняемы комментарий
+     * @param user {@link User} Пользователь комментария
+     * @return {@link CommentDto} Сохраненный комментарий
      */
     CommentDto saveComment(CommentSaveDto commentSaveDto, User user);
 
     /**
-     * Get list comments from database
+     * Получение списка комментариев задачи
      *
-     * @param taskId {@link Integer}
-     * @return {@link List <CommentDto>}
+     * @param taskId {@link Integer} id задачи
+     * @return {@link List <CommentDto>} Список комментариев задачи
      */
     List<CommentDto> getComments(Integer taskId);
 }

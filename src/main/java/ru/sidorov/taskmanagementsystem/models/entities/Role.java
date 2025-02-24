@@ -7,6 +7,13 @@ import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 
+/**
+ * Представляет роль пользователя в системе.
+ * Реализует интерфейс {@link GrantedAuthority} для работы с Spring Security.
+ *
+ * @author Vitaliy5796
+ * @version 1.1
+ */
 @Entity
 @EqualsAndHashCode
 @Getter
@@ -18,12 +25,19 @@ import javax.persistence.*;
 @Builder
 public class Role implements GrantedAuthority {
 
+    /**
+     * Уникальный идентификатор роли.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     @ApiModelProperty(notes = "Уникальный идентификатор роли")
     private int id;
 
+
+    /**
+     * Наименование роли (например, ROLE_ADMIN, ROLE_USER).
+     */
     @Column(name = "name", nullable = false)
     @ApiModelProperty(notes = "Наименование роли")
     private String name;
