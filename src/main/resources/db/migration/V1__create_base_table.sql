@@ -16,23 +16,27 @@ CREATE TABLE users
 
 CREATE TABLE tasks
 (
-    id          int AUTO_INCREMENT primary key,
-    title       varchar(255),
-    description varchar(255),
-    status      varchar(20),
-    priority    varchar(10),
-    user_id     int,
-    assignee_id int,
-    foreign key (user_id) references users (id),
-    foreign key (assignee_id) references users (id)
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    title       VARCHAR(255) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    status      VARCHAR(20) NOT NULL,
+    priority    VARCHAR(10) NOT NULL,
+    user_id     INT,
+    assignee_id INT,
+    created_at  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    version     INT DEFAULT 1,
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (assignee_id) REFERENCES users (id)
 );
 
 CREATE TABLE comments
 (
-    id      int AUTO_INCREMENT primary key,
-    content varchar(255),
-    user_id int,
-    task_id int,
-    foreign key (user_id) references users (id),
-    foreign key (task_id) references tasks (id)
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    content    VARCHAR(255) NOT NULL,
+    user_id    INT,
+    task_id    INT,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (task_id) REFERENCES tasks (id)
 );
